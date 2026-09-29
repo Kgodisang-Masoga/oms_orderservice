@@ -2,7 +2,9 @@ package com.fnb.orderservice.security;
 
 public interface JwtService {
 
-    boolean validateToken(String token, String email);
+    boolean validateToken(String token);
+
+    long extractCustomerId(String token);
 
     String extractEmailFromToken(String token);
 
