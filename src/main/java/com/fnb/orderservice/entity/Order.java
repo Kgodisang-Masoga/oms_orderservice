@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -33,6 +35,9 @@ public class Order {
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items = new ArrayList<>();
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -42,5 +47,10 @@ public class Order {
     @PreUpdate
     protected void onUpdate() {
         this.updateAt = LocalDateTime.now();
+    }
+
+    public void addItem(OrderItem item){
+        items.add(item);
+        item.setOrder(this);
     }
 }

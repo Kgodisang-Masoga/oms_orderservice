@@ -25,7 +25,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public boolean validateToken(String token, String email) {
+    public boolean validateToken(String token) {
         try {
             Claims claims = parseClaims(token);
 
@@ -33,6 +33,12 @@ public class JwtServiceImpl implements JwtService {
         } catch (ExpiredJwtException e) {
             return false;
         }
+    }
+
+    @Override
+    public long extractCustomerId(String token) {
+        Long customerId = parseClaims(token).get("customerId", Long.class);
+        return customerId;
     }
 
     @Override
